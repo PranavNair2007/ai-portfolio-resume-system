@@ -1,5 +1,9 @@
 # 🚀 PortfolioPulse AI - Intelligent Portfolio Database & Dynamic Resume Generator
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/PranavNair2007/ai-portfolio-resume-system)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/PranavNair2007/ai-portfolio-resume-system)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-PranavNair2007%2Fai--portfolio--resume--system-blue?logo=github)](https://github.com/PranavNair2007/ai-portfolio-resume-system)
+
 An enterprise-grade, AI-powered portfolio management and resume customization platform. It centralizes professional credentials, projects, certifications, experiences, and publications in a structured relational database (SQLite), integrates with the **Google Gemini API** for semantic analysis and job-description matching, provides **bi-directional Google Sheets synchronization**, and generates ATS-optimized, downloadable resumes (**DOCX & PDF**) dynamically tailored to specific target Job Descriptions (JDs).
 
 ---
