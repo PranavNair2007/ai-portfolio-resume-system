@@ -1,0 +1,20 @@
+Job Title: Senior Machine Learning & NLP Data Scientist
+Company: Synthetica AI Research Labs
+Location: Sunnyvale, CA / Remote
+
+About the Role:
+Join our Applied AI Research group to drive breakthroughs in efficient transformer architectures, neural retrieval, and large-scale multimodal document intelligence. You will transition cutting-edge research concepts into optimized, scalable machine learning systems.
+
+Key Responsibilities:
+- Design, fine-tune, and evaluate state-of-the-art transformer and LLM architectures using PyTorch and Hugging Face.
+- Research and implement efficient model optimization techniques including quantization (INT4/INT8), LoRA fine-tuning, and context compression.
+- Develop dense retrieval and multimodal embedding models for semantic document parsing and knowledge extraction.
+- Conduct rigorous experimentation, benchmark against industry baselines, and contribute to research publications.
+- Collaborate with engineering leads to package and deploy ML models into high-throughput inference endpoints.
+
+Requirements:
+- Master's or Ph.D. in Computer Science, Machine Learning, Applied Mathematics, or related field.
+- 4+ years of hands-on experience in Deep Learning and Natural Language Processing.
+- Expert-level command of PyTorch, Python, Hugging Face Transformers, and CUDA optimization.
+- Documented record of research publications (NeurIPS, ICML, ACL, IEEE, or similar) or major open-source ML contributions.
+- Deep theoretical understanding of attention mechanisms, vector search, and model evaluation metrics.

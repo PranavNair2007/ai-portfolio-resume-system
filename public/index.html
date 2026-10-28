@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PortfolioPulse AI - Intelligent Portfolio & Job-Tailored Resume System</title>
+    <meta name="description" content="AI-Powered portfolio management system with Gemini API integration, Google Sheets synchronization, and dynamic Job-Description tailored resume generation.">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Background Ambient Glow Orbs -->
+    <div class="bg-glow-orb bg-orb-1"></div>
+    <div class="bg-glow-orb bg-orb-2"></div>
+
+    <div class="app-container">
+        <!-- Top Sticky Header -->
+        <header class="app-header">
+            <div class="header-inner">
+                <div class="brand-wrapper">
+                    <div class="brand-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                    </div>
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span class="brand-title">PortfolioPulse</span>
+                            <span class="brand-badge">Gemini 2.5 AI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <nav class="nav-tabs" id="mainNavTabs">
+                    <button class="tab-btn active" data-tab="tab-portfolio" id="navPortfolioBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path><path d="M6 6h10"></path><path d="M6 10h10"></path></svg>
+                        Portfolio Database
+                        <span class="badge-pill" id="navSkillsCount">29</span>
+                    </button>
+                    <button class="tab-btn" data-tab="tab-matcher" id="navMatcherBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        JD Matcher & Customizer
+                    </button>
+                    <button class="tab-btn" data-tab="tab-studio" id="navStudioBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                        Live Resume Studio
+                    </button>
+                    <button class="tab-btn" data-tab="tab-sheets" id="navSheetsBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg>
+                        Google Sheets Sync
+                    </button>
+                    <button class="tab-btn" data-tab="tab-compare" id="navCompareBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                        Export & Compare
+                    </button>
+                </nav>
+
+                <!-- Header Actions -->
+                <div class="header-actions">
+                    <div class="status-pill" id="syncStatusIndicator">
+                        <span class="pulse-dot"></span>
+                        <span id="syncStatusText">Database Online</span>
+                    </div>
+
+                    <button class="btn-icon" id="themeToggleBtn" title="Toggle Dark/Light Mode">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    </button>
+
+                    <button class="btn-icon" id="openSettingsBtn" title="API & Google Sheets Settings">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Body -->
+        <main class="app-main">
+            <!-- TAB 1: PORTFOLIO DATABASE -->
+            <section class="tab-pane active" id="tab-portfolio">
+                <div class="view-header">
+                    <div>
+                        <h1>Centralized Professional Portfolio Database</h1>
+                        <p>Store, manage, and validate all professional credentials, projects, experiences, and competencies.</p>
+                    </div>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <button class="btn btn-secondary btn-sm" id="btnImportRawText">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            AI Unstructured Importer
+                        </button>
+                        <button class="btn btn-secondary btn-sm" id="btnResetPortfolio">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                            Reset Sample Data
+                        </button>
+                        <button class="btn btn-primary btn-sm" id="btnAddNewItem">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            Add New Entry
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid-portfolio">
+                    <!-- Left Category Navigation -->
+                    <aside class="category-sidebar">
+                        <div class="sidebar-title">Portfolio Categories</div>
+                        <ul class="cat-nav-list" id="categoryNavList">
+                            <li class="cat-nav-item active" data-cat="personal">
+                                <span>👤 Personal & Contact Info</span>
+                                <span class="cat-count">1</span>
+                            </li>
+                            <li class="cat-nav-item" data-cat="skills">
+                                <span>⚡ Technical & Soft Skills</span>
+                                <span class="cat-count" id="count-skills">0</span>
+                            </li>
+                            <li class="cat-nav-item" data-cat="experience">
+                                <span>💼 Work Experience</span>
+                                <span class="cat-count" id="count-experience">0</span>
+                            </li>
+                            <li class="cat-nav-item" data-cat="projects">
+                                <span>🚀 Featured Projects</span>
+                                <span class="cat-count" id="count-projects">0</span>
+                            </li>
+                            <li class="cat-nav-item" data-cat="education">
+                                <span>🎓 Education</span>
+                                <span class="cat-count" id="count-education">0</span>
+                            </li>
+                            <li class="cat-nav-item" data-cat="certifications">
+                                <span>📜 Certifications & Courses</span>
+                                <span class="cat-count" id="count-certifications">0</span>
+                            </li>
+                            <li class="cat-nav-item" data-cat="achievements">
+                                <span>🏆 Achievements & Awards</span>
+                                <span class="cat-count" id="count-achievements">0</span>
+                            </li>
+                            <li class="cat-nav-item" data-cat="publications">
+                                <span>📚 Research & Publications</span>
+                                <span class="cat-count" id="count-publications">0</span>
+                            </li>
+                            <li class="cat-nav-item" data-cat="languages">
+                                <span>🌐 Languages & Competencies</span>
+                                <span class="cat-count" id="count-languages">0</span>
+                            </li>
+                        </ul>
+                    </aside>
+
+                    <!-- Right Category Content Pane -->
+                    <div class="category-content" id="categoryContentArea">
+                        <!-- Dynamic items will render here via JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: JD MATCHER & CUSTOMIZER -->
+            <section class="tab-pane" id="tab-matcher">
+                <div class="view-header">
+                    <div>
+                        <h1>AI Job Description Analyzer & Matcher</h1>
+                        <p>Analyze any job description with Gemini, benchmark portfolio alignment, and strategically customize your resume.</p>
+                    </div>
+                </div>
+
+                <div class="jd-input-box">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                        <span class="form-label" style="margin-bottom: 0;">Quick Test Benchmarks (Load Sample Job Descriptions):</span>
+                        <div class="sample-jd-buttons">
+                            <button class="btn btn-secondary btn-sm" id="btnSampleJd1">
+                                🎯 Test JD 1: Senior Full-Stack & AI Engineer
+                            </button>
+                            <button class="btn btn-secondary btn-sm" id="btnSampleJd2">
+                                🔬 Test JD 2: Machine Learning & NLP Data Scientist
+                            </button>
+                        </div>
+                    </div>
+
+                    <textarea class="form-control" id="jdInputText" rows="7" placeholder="Paste target Job Description (JD) text here..."></textarea>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">
+                            Gemini extracts required skills, analyzes match score, and recommends high-impact projects.
+                        </div>
+                        <button class="btn btn-primary" id="btnAnalyzeJD">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></svg>
+                            Analyze & Match with Gemini API
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Match Results Container (Hidden initially until analyzed) -->
+                <div id="matchResultsSection" style="display: none;">
+                    <div class="match-dashboard">
+                        <!-- Match Score Dial -->
+                        <div class="match-score-card">
+                            <div class="score-circle">
+                                <span class="score-number" id="matchScoreVal">88</span>
+                                <span class="score-percent">%</span>
+                            </div>
+                            <div class="score-label" id="matchLevelVal">Strong Match</div>
+                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;" id="matchSummaryText">
+                                High alignment with core requirements and tech stack.
+                            </div>
+                        </div>
+
+                        <!-- Analysis Breakdown -->
+                        <div class="glass-card">
+                            <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem;" id="targetRoleCompanyText">Senior Full-Stack AI Engineer @ Target Company</h3>
+                            <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1rem;" id="targetRoleOverview"></p>
+
+                            <!-- Skills Matrix -->
+                            <div class="skills-matrix">
+                                <div class="matrix-col">
+                                    <div class="matrix-header" style="color: #34d399;">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        Matched Portfolio Skills (<span id="matchedSkillsCount">0</span>)
+                                    </div>
+                                    <div id="matchedSkillsContainer" style="display: flex; flex-wrap: wrap; gap: 0.4rem;"></div>
+                                </div>
+                                <div class="matrix-col">
+                                    <div class="matrix-header" style="color: #f87171;">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                        Missing / Gap Skills (<span id="missingSkillsCount">0</span>)
+                                    </div>
+                                    <div id="missingSkillsContainer" style="display: flex; flex-wrap: wrap; gap: 0.4rem;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Anti-Hallucination Guardrail Banner -->
+                    <div class="guardrail-banner">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        <div>
+                            <strong>Strict Anti-Hallucination Guardrail Active:</strong>
+                            All customized resume bullet points, skills, and metrics are verified 100% against your original portfolio database. No invented facts.
+                        </div>
+                    </div>
+
+                    <!-- Interactive Parameter Checklist: Select/Deselect Items to Include -->
+                    <div class="checklist-container">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <div>
+                                <h3 style="font-size: 1.15rem; font-weight: 700;">Resume Parameter Customization</h3>
+                                <p style="font-size: 0.85rem; color: var(--text-muted);">Select or deselect the specific experiences, projects, and skills to include in the generated resume.</p>
+                            </div>
+                            <button class="btn btn-success" id="btnProceedToStudio">
+                                Generate & Preview Tailored Resume →
+                            </button>
+                        </div>
+
+                        <!-- Category Selection Checklists -->
+                        <div id="selectionChecklistsArea">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: LIVE RESUME STUDIO -->
+            <section class="tab-pane" id="tab-studio">
+                <div class="view-header">
+                    <div>
+                        <h1>Live Resume Studio & Real-Time Preview</h1>
+                        <p>Customize ATS-optimized layouts, tailor summaries, review bullets, and export pixel-perfect resumes.</p>
+                    </div>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <button class="btn btn-secondary btn-sm" id="btnPrintResume">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                            Print / Save PDF
+                        </button>
+                        <button class="btn btn-primary btn-sm" id="btnDownloadDocx">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            Download Word (.docx)
+                        </button>
+                    </div>
+                </div>
+
+                <div class="studio-layout">
+                    <!-- Left Toolbar -->
+                    <div class="studio-toolbar">
+                        <!-- Template Picker -->
+                        <div class="toolbar-section">
+                            <div class="toolbar-title">Resume Template</div>
+                            <select class="form-control" id="templateSelector">
+                                <option value="modern" selected>Modern Tech (Clean, High-Impact)</option>
+                                <option value="classic">Classic Executive (Traditional ATS)</option>
+                                <option value="minimal">Minimalist Clean (High-Density)</option>
+                            </select>
+                        </div>
+
+                        <!-- Accent Color -->
+                        <div class="toolbar-section">
+                            <div class="toolbar-title">Accent Color</div>
+                            <div class="color-picker-row">
+                                <div class="color-dot active" data-color="#4f46e5" style="background: #4f46e5;" title="Indigo"></div>
+                                <div class="color-dot" data-color="#059669" style="background: #059669;" title="Emerald"></div>
+                                <div class="color-dot" data-color="#7c3aed" style="background: #7c3aed;" title="Violet"></div>
+                                <div class="color-dot" data-color="#0284c7" style="background: #0284c7;" title="Ocean"></div>
+                                <div class="color-dot" data-color="#dc2626" style="background: #dc2626;" title="Crimson"></div>
+                                <div class="color-dot" data-color="#1f2937" style="background: #1f2937;" title="Slate"></div>
+                            </div>
+                        </div>
+
+                        <!-- AI Tailoring Action -->
+                        <div class="toolbar-section">
+                            <div class="toolbar-title">Gemini AI Tailoring</div>
+                            <button class="btn btn-secondary btn-sm" id="btnAiTailorSummary" style="width: 100%; margin-bottom: 0.5rem;">
+                                ✍️ Tailor Summary to Target JD
+                            </button>
+                            <button class="btn btn-secondary btn-sm" id="btnAiOptimizeBullets" style="width: 100%;">
+                                ✨ Polish Bullets for ATS Fit
+                            </button>
+                        </div>
+
+                        <!-- Export Options -->
+                        <div class="toolbar-section">
+                            <div class="toolbar-title">Download & Save</div>
+                            <button class="btn btn-primary btn-sm" id="btnDownloadDocxSidebar" style="width: 100%; margin-bottom: 0.5rem;">
+                                📄 Download .DOCX Resume
+                            </button>
+                            <button class="btn btn-secondary btn-sm" id="btnDownloadJson" style="width: 100%; margin-bottom: 0.5rem;">
+                                💾 Export Resume Data (JSON)
+                            </button>
+                            <button class="btn btn-secondary btn-sm" id="btnSaveConfig" style="width: 100%;">
+                                📌 Save Custom Configuration
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Live Sheet Preview -->
+                    <div class="resume-preview-container">
+                        <div class="resume-sheet tpl-modern" id="resumePreviewSheet">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: GOOGLE SHEETS SYNC -->
+            <section class="tab-pane" id="tab-sheets">
+                <div class="view-header">
+                    <div>
+                        <h1>Google Sheets Database Integration & Cloud Sync</h1>
+                        <p>Export all 9 portfolio categories to Google Sheets, maintain cloud backups, and synchronize live updates.</p>
+                    </div>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <button class="btn btn-secondary btn-sm" id="btnDownloadXlsxDirect">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            Download Multi-Tab XLSX Workbook
+                        </button>
+                        <button class="btn btn-success btn-sm" id="btnSyncGoogleSheets">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"></path><path d="M16 21h5v-5"></path></svg>
+                            Export to Google Sheets Now
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <!-- Left: Google Apps Script Webhook Setup Guide -->
+                    <div class="glass-card">
+                        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Live Google Sheet Connection</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
+                            Connect your Google Sheet in 30 seconds via our automated Google Apps Script webhook. The webhook creates dedicated tabs for all 9 categories with styled header rows.
+                        </p>
+
+                        <div class="form-group">
+                            <label class="form-label">Google Apps Script Web App URL</label>
+                            <input type="url" class="form-control" id="sheetsWebhookInput" placeholder="https://script.google.com/macros/s/AKfycb.../exec">
+                        </div>
+
+                        <div style="display: flex; gap: 0.75rem;">
+                            <button class="btn btn-primary btn-sm" id="btnSaveWebhookUrl">
+                                Save Webhook URL
+                            </button>
+                            <button class="btn btn-secondary btn-sm" id="btnTestWebhook">
+                                Test Connection & Sync
+                            </button>
+                        </div>
+
+                        <hr style="border: none; border-top: 1px solid var(--border-subtle); margin: 1.5rem 0;">
+
+                        <h4 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 0.5rem;">How to deploy your Google Sheet Webhook (3 Steps):</h4>
+                        <ol style="font-size: 0.85rem; color: var(--text-secondary); padding-left: 1.25rem; line-height: 1.6;">
+                            <li>Open a blank Google Sheet at <a href="https://sheets.new" target="_blank" style="color: var(--primary);">sheets.new</a></li>
+                            <li>Go to <strong>Extensions &gt; Apps Script</strong>, delete existing code, and paste the code from below.</li>
+                            <li>Click <strong>Deploy &gt; New deployment</strong>, select type <strong>Web app</strong>, set access to <strong>Anyone</strong>, click Deploy, and paste the URL above!</li>
+                        </ol>
+
+                        <div style="margin-top: 1rem;">
+                            <button class="btn btn-secondary btn-sm" id="btnCopyAppsScriptCode">
+                                📋 Copy Ready-to-Use Google Apps Script (Code.gs)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right: Synchronization Logs & Status -->
+                    <div class="glass-card">
+                        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Synchronization History & Status</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                            Audit log of all export events, records synced per category, and live spreadsheet status.
+                        </p>
+
+                        <div id="sheetsSyncLogArea" style="max-height: 380px; overflow-y: auto;">
+                            <!-- Sync logs loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: EXPORT & COMPARE CENTER -->
+            <section class="tab-pane" id="tab-compare">
+                <div class="view-header">
+                    <div>
+                        <h1>Multi-Format Export & Dual Resume Comparison</h1>
+                        <p>Verify how the exact same portfolio dynamically customizes into two distinct resumes for two different job descriptions.</p>
+                    </div>
+                </div>
+
+                <div class="grid-2" style="margin-bottom: 2rem;">
+                    <!-- Resume A Preview -->
+                    <div class="glass-card" style="border-top: 4px solid #4f46e5;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                            <span class="tag-badge primary">JD 1 Tailored Resume</span>
+                            <button class="btn btn-primary btn-sm" id="btnDownloadSample1Docx">Download DOCX</button>
+                        </div>
+                        <h3 style="font-size: 1.2rem; font-weight: 700;">Senior Full-Stack & AI Systems Engineer</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Target: Enterprise SaaS, RAG Pipelines, React, Node.js, Distributed Cloud</p>
+                        
+                        <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: var(--radius-sm); font-size: 0.825rem; line-height: 1.5; margin-bottom: 1rem;">
+                            <strong>Tailored Professional Summary:</strong><br>
+                            <span id="compareSummary1">Versatile Senior Full-Stack & AI Systems Engineer with 6+ years of experience architecting high-scale distributed systems, enterprise generative AI copilots, and resilient cloud services. Expert in React, TypeScript, Node.js, and multi-tenant RAG pipelines processing millions of document chunks.</span>
+                        </div>
+
+                        <div style="font-size: 0.85rem;">
+                            <strong>Key Highlights Emphasized:</strong>
+                            <ul class="bullet-list" style="margin-top: 0.5rem;">
+                                <li>Multi-tenant Agentic RAG workflow using Gemini 1.5/2.0 reducing query latency by 42%.</li>
+                                <li>Full-stack modernization in React, TypeScript, and WebSocket streaming improving retention by 28%.</li>
+                                <li>OmniAgent open-source multi-agent automation orchestration framework (2,400+ stars).</li>
+                                <li>AWS Certified Solutions Architect – Professional accreditation.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Resume B Preview -->
+                    <div class="glass-card" style="border-top: 4px solid #059669;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                            <span class="tag-badge success">JD 2 Tailored Resume</span>
+                            <button class="btn btn-success btn-sm" id="btnDownloadSample2Docx">Download DOCX</button>
+                        </div>
+                        <h3 style="font-size: 1.2rem; font-weight: 700;">Senior Machine Learning & NLP Data Scientist</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Target: Transformer Optimization, PyTorch, Model Quantization, Research Papers</p>
+                        
+                        <div style="background: rgba(0,0,0,0.2); padding: 1rem; border-radius: var(--radius-sm); font-size: 0.825rem; line-height: 1.5; margin-bottom: 1rem;">
+                            <strong>Tailored Professional Summary:</strong><br>
+                            <span id="compareSummary2">Accomplished Senior Machine Learning & NLP Data Scientist specializing in deep neural retrieval, transformer token quantization, and multimodal knowledge representation. Proven academic and industry track record in PyTorch, NeurIPS research, and high-performance vector architectures.</span>
+                        </div>
+
+                        <div style="font-size: 0.85rem;">
+                            <strong>Key Highlights Emphasized:</strong>
+                            <ul class="bullet-list" style="margin-top: 0.5rem;">
+                                <li>Novel 4-bit INT quantization for Transformers in PyTorch, cutting VRAM by 55% with 98.6% BLEU accuracy.</li>
+                                <li>NeurIPS Workshop publication on Accelerating Multi-Modal Document Retrieval via Late-Interaction Encoders.</li>
+                                <li>1st Place Winner – National AI Agents Hackathon (Google Cloud & Devpost).</li>
+                                <li>Stanford University M.S. in Computer Science (AI Track, GPA 3.92).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Universal Add/Edit Entry Modal -->
+    <div class="modal-overlay" id="entryModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title" id="entryModalTitle">Add Portfolio Entry</h3>
+                <button class="btn-icon" id="btnCloseEntryModal">&times;</button>
+            </div>
+            <div class="modal-body" id="entryModalBody">
+                <!-- Dynamically populated fields -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="btnCancelEntryModal">Cancel</button>
+                <button class="btn btn-primary" id="btnSaveEntryModal">Save to Database</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Unstructured Text Importer Modal -->
+    <div class="modal-overlay" id="importerModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title">AI Unstructured Portfolio Importer</h3>
+                <button class="btn-icon" id="btnCloseImporterModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                    Paste any unorganized text, raw resume draft, LinkedIn profile export, or bio. Gemini will parse and structure the information into verified portfolio records.
+                </p>
+                <div class="form-group">
+                    <label class="form-label">Raw Text / Bio Content</label>
+                    <textarea class="form-control" id="rawImportTextInput" rows="8" placeholder="Paste raw bio or resume text here..."></textarea>
+                </div>
+                <div style="font-size: 0.8rem; color: #34d399; display: flex; align-items: center; gap: 0.4rem;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    Strict Anti-Hallucination: Only factual text provided will be imported.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="btnCancelImporterModal">Cancel</button>
+                <button class="btn btn-primary" id="btnExecuteRawImport">
+                    Parse & Import with Gemini
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- API & System Settings Modal -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title">API & Synchronization Settings</h3>
+                <button class="btn-icon" id="btnCloseSettingsModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Google Gemini API Key</label>
+                    <input type="password" class="form-control" id="settingsGeminiKeyInput" placeholder="Enter GEMINI_API_KEY">
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.35rem;">
+                        Key is securely stored in local SQLite settings and never exposed to client-side bundles. If empty, the built-in intelligent NLP heuristic engine runs.
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Google Sheets Webhook URL</label>
+                    <input type="url" class="form-control" id="settingsSheetsWebhookInput" placeholder="https://script.google.com/macros/s/.../exec">
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.35rem;">
+                        Web app URL from your deployed Google Apps Script.
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="btnCancelSettingsModal">Cancel</button>
+                <button class="btn btn-primary" id="btnSaveSettings">Save Settings</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Frontend Application Scripts -->
+    <script src="/js/portfolioUI.js"></script>
+    <script src="/js/jdMatcherUI.js"></script>
+    <script src="/js/resumeStudioUI.js"></script>
+    <script src="/js/sheetsUI.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>

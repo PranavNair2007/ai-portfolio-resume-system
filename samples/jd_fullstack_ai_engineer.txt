@@ -1,0 +1,21 @@
+Job Title: Senior Full-Stack & AI Systems Engineer
+Company: ScaleSphere Cloud Technologies
+Location: San Francisco, CA / Remote
+
+About the Role:
+ScaleSphere is hiring a Senior Full-Stack & AI Engineer to pioneer generative AI features across our enterprise SaaS analytics suite. You will bridge frontend engineering with deep learning infrastructure, building high-throughput services that handle millions of interactions daily.
+
+Key Responsibilities:
+- Architect and ship responsive, accessible web dashboards using React, TypeScript, and modern CSS.
+- Build high-concurrency backend services and REST/GraphQL APIs with Node.js, Express, and Python.
+- Design, deploy, and monitor production RAG (Retrieval-Augmented Generation) workflows using Gemini models, vector databases, and semantic search.
+- Collaborate with cloud infrastructure teams to deploy containerized microservices on AWS/GCP with Docker and CI/CD pipelines.
+- Ensure strict latency budgets, automated testing, and low-latency response times for real-time streaming interfaces.
+
+Requirements:
+- 5+ years of software engineering experience across frontend and backend.
+- Strong proficiency in TypeScript, React, Node.js, and Python.
+- Proven experience deploying production LLM solutions (RAG, vector embeddings, prompt engineering).
+- Experience with relational databases (PostgreSQL/SQLite) and distributed caching (Redis).
+- Hands-on experience with Docker, cloud infrastructure (AWS or GCP), and CI/CD automation.
+- Excellent communication and ability to mentor junior engineers.
